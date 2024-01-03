@@ -3,9 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Customer } from '../models/customer';
 
-const  baseUrl  ='https://localhost:7150/api/Customer/';
+const  baseUrl  ='https://localhost:7150/api/Customer';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CustomerService {
    
 

@@ -12,6 +12,7 @@ import { ViewCustomerComponent } from './Components/view-customer/view-customer.
 import { CreateCustomerComponent } from './Components/create-customer/create-customer.component';
 import { CustomerService } from './services/customer.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    
+    HttpClientModule
   ],
   providers: [CustomerService],
   bootstrap: [AppComponent]

@@ -23,12 +23,12 @@ export class ViewCustomerComponent implements OnInit {
       })
   }
 
-  updateCustomer(id:number)
+  updateCustomer(id:any)
   {
     this.router.navigate(["/update"]);
   }
 
-  deleteCustomer(id:number)
+  deleteCustomer(id:any)
   {
     
   }
