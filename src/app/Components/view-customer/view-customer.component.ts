@@ -17,12 +17,16 @@ export class ViewCustomerComponent implements OnInit {
    
 }  
   ngOnInit(): void {
+   this.getallcustomers();
+  }
+
+  getallcustomers()
+  {
     this.customerService.getAllCustomers().subscribe(data=>
       {
         this.customers=data;
       })
   }
-
   updateCustomer(id:any)
   {
     this.router.navigate(['/update',id]);
@@ -30,6 +34,10 @@ export class ViewCustomerComponent implements OnInit {
 
   deleteCustomer(id:any)
   {
-    
+    this.customerService.DeleteCustomer(id).subscribe(data=>
+      {
+        alert("Deleted customer info using id:"+id);
+        this.getallcustomers();
+      })
   }
 }

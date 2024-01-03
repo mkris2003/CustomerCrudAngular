@@ -16,4 +16,20 @@ constructor(private http: HttpClient) { }
   getAllCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(`${baseUrl}/GetAllCustomers`);
   }
+
+  getCustomerById(id:number): Observable<Customer> {
+    return this.http.get<Customer>(`${baseUrl}/${id}`);
+  }
+
+  addCustomer(customer: Customer): Observable<Customer> {
+    return this.http.post<Customer>(`${baseUrl}`, customer);
+  }
+
+  updateCustomer(customer: Customer): Observable<Customer> {
+    return this.http.put<Customer>(`${baseUrl}`, customer);
+  }
+
+  DeleteCustomer(id: number): Observable<any> {
+    return this.http.delete(`${baseUrl}/${id}`);
+  }
 }

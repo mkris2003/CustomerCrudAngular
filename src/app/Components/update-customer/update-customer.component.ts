@@ -1,5 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Customer } from '../../models/customer';
+import { CustomerService } from '../../services/customer.service';
 
 @Component({
   selector: 'app-update-customer',
@@ -11,12 +14,27 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
   id: number=0;
   private sub: any;
 
-  constructor(private route: ActivatedRoute) {}
+  updateCustomerForm!: FormGroup;
+  customer: Customer=new Customer();
+  
+  constructor(private route: ActivatedRoute,  private formBuilder: FormBuilder,
+    private customerService:CustomerService,private router: Router) {}
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
        this.id = +params['id']; // (+) converts string 'id' to a number
- //console.log('update customer' + this.id );
-       // In a real app: dispatch action to load the details here.
+  this.customerService.getCustomerById(this.id).subscribe(data=>{
+    this.updateCustomerForm.controls["id"].setValue(data.id);
+    this.updateCustomerForm.controls["firstname"].setValue(data.firstName);
+    this.updateCustomerForm.controls["lastname"].setValue(data.lastName);
+    this.updateCustomerForm.controls["email"].setValue(data.email);   
+  })
+    });
+
+    this.updateCustomerForm = this.formBuilder.group({      
+      firstname: ["", Validators.required],
+      lastname: ["", Validators.required],
+      email: ["", Validators.email],
+      id:[]  
     });
   }
 
@@ -24,4 +42,16 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
   
+  updateCustomer() {
+
+    var updatecustomer = new Customer(this.updateCustomerForm.value);
+    this.customerService.updateCustomer(updatecustomer).subscribe(data=>{
+      console.log(
+        "update Customer " + JSON.stringify(data)
+      );
+      alert("Customer data updated");
+      this.router.navigate(['/view']);
+    })
+   
+  }
 }

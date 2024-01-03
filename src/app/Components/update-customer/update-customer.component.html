@@ -1,1 +1,29 @@
-<p>update-customer works!</p>
+<app-navigation-bar></app-navigation-bar>
+
+<h1 align="center">Update Customer</h1>
+
+<div class="col-md-4 m-5 pb-5">
+  <form [formGroup]="updateCustomerForm" (ngSubmit)="updateCustomer()">
+    <div class="form-group">
+      <label>FirstName : </label>
+      <input type="text" class="form-control" formControlName="firstname" placeholder="Enter customer first name">
+      <span class="warning" *ngIf="updateCustomerForm.controls['firstname'].errors?.required">
+        *Customer first name is required </span>
+    </div>
+    <div class="form-group">
+        <label>LastName : </label>
+        <input type="text" class="form-control" formControlName="lastname" placeholder="Enter customer last name">
+        <span class="warning" *ngIf="updateCustomerForm.controls['lastname'].errors?.required">
+          *Customer last name is required </span>
+      </div>   
+
+    <div class="form-group">
+      <label>Customer email : </label>
+      <input type="text" class="form-control" formControlName="email" placeholder="Enter customer email">
+      <span class="warning" *ngIf="updateCustomerForm.controls['email'].errors?.email">
+        *Please enter a valid email </span>
+    </div>
+    <button type="reset" class="btn btn-warning mr-1">Reset</button>
+    <button type="submit" [disabled]="!updateCustomerForm.valid" class="btn btn-primary">Update Customer</button>
+  </form>
+</div>
