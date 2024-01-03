@@ -25,7 +25,7 @@ export class ViewCustomerComponent implements OnInit {
 
   updateCustomer(id:any)
   {
-    this.router.navigate(["/update"]);
+    this.router.navigate(['/update',id]);
   }
 
   deleteCustomer(id:any)
