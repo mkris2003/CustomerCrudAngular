@@ -29,7 +29,7 @@ constructor(private http: HttpClient) { }
     return this.http.put<Customer>(`${baseUrl}`, customer);
   }
 
-  DeleteCustomer(id: number): Observable<any> {
-    return this.http.delete(`${baseUrl}/${id}`);
+  DeleteCustomer(id: number): Observable<Customer> {
+    return this.http.delete<Customer>(`${baseUrl}/${id}`);
   }
 }

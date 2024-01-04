@@ -1,8 +1,11 @@
+import { Actions, ofType } from '@ngrx/effects';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Customer } from '../../models/customer';
-import { CustomerService } from '../../services/customer.service';
+import { select, Store } from '@ngrx/store';
+import { CustomerActions } from '../../store/actions/customer.actions';
+import { selectCustomerList } from '../../store/selects/CustomerSelect';
 
 @Component({
   selector: 'app-view-customer',
@@ -13,8 +16,10 @@ export class ViewCustomerComponent implements OnInit {
 
   public customers: Customer[]=[];
   
-  constructor( private customerService:CustomerService,private router: Router) {  
+  constructor( private router: Router,
+    private  store: Store, private actions$: Actions) {  
    
+      this.store.dispatch(CustomerActions.loadCustomers());
 }  
   ngOnInit(): void {
    this.getallcustomers();
@@ -22,10 +27,14 @@ export class ViewCustomerComponent implements OnInit {
 
   getallcustomers()
   {
-    this.customerService.getAllCustomers().subscribe(data=>
+      this.store.pipe(select(selectCustomerList)).subscribe(data=>
       {
         this.customers=data;
-      })
+        // console.log(
+        //   "Store Customer info" + JSON.stringify(data)
+        // );
+      });
+    
   }
   updateCustomer(id:any)
   {
@@ -34,10 +43,11 @@ export class ViewCustomerComponent implements OnInit {
 
   deleteCustomer(id:any)
   {
-    this.customerService.DeleteCustomer(id).subscribe(data=>
-      {
-        alert("Deleted customer info using id:"+id);
-        this.getallcustomers();
-      })
+    this.store.dispatch(CustomerActions.deleteCustomer({id:id}));
+    this.actions$.pipe(ofType(CustomerActions.deleteCustomerSuccess)).subscribe((data: any) => {
+      alert("Deleted customer info using id:"+id);
+      
+    })  
+    
   }
 }

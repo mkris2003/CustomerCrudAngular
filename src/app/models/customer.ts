@@ -1,10 +1,10 @@
 export class Customer {
-    id? :number| undefined;
-    createAt? :Date| undefined;
-    lastUpdated? :Date| undefined;
-    firstName :string| undefined;
-    lastName :string| undefined;
-    email:string| undefined;
+    id :number=0;
+    createAt? :Date;
+    lastUpdated? :Date;
+    firstName :string='';
+    lastName :string='';
+    email:string='';
 
     public constructor(init?: Partial<Customer>) {
         Object.assign(this, init);
